@@ -2,6 +2,11 @@
 [尚硅谷尚品甄选学习项目](https://www.bilibili.com/video/BV1NF411S7DS)
 
 ## Project Features 
+- 统一描述
+  - 前台：customer portal
+  - 后台：admin portal
+  - 前端：Frontend
+  - 后端：Backend
 ![img.png](md-img-01.png)
 
 ![img_1.png](md-img-02.png)
