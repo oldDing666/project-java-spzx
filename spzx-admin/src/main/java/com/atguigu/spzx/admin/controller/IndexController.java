@@ -6,6 +6,7 @@ import com.atguigu.spzx.model.dto.system.LoginDto;
 import com.atguigu.spzx.model.vo.common.Result;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
 import com.atguigu.spzx.model.vo.system.LoginVo;
+import com.atguigu.spzx.model.vo.system.CaptchaVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,5 +23,11 @@ public class IndexController {
   public Result<LoginVo> Login(LoginDto loginDto) {
     LoginVo loginVo = indexService.login(loginDto);
     return Result.build(loginVo, ResultCodeEnum.SUCCESS);
+  }
+
+  @PostMapping("/captcha")
+  public Result<CaptchaVo> captcha() {
+    CaptchaVo captchaVo = indexService.generateCaptcha();
+    return Result.build(captchaVo, ResultCodeEnum.SUCCESS);
   }
 }

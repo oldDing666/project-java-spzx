@@ -1,5 +1,7 @@
 package com.atguigu.spzx.admin.service.impl;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.CircleCaptcha;
 import com.alibaba.fastjson2.JSON;
 import com.atguigu.spzx.admin.repository.IndexRepository;
 import com.atguigu.spzx.admin.service.IndexService;
@@ -7,6 +9,7 @@ import com.atguigu.spzx.common.exception.AdminException;
 import com.atguigu.spzx.model.dto.system.LoginDto;
 import com.atguigu.spzx.model.entity.system.SysUser;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
+import com.atguigu.spzx.model.vo.system.CaptchaVo;
 import com.atguigu.spzx.model.vo.system.LoginVo;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,7 +34,7 @@ public class IndexServiceImpl implements IndexService {
     String codeKey = loginDto.getCodeKey();
 
     //2 根据获取的redis里面key ，查询redis里面存储验证码
-    String redisCaptcha = redisTemplate.opsForValue().get("user:validate" + codeKey);
+    String redisCaptcha = redisTemplate.opsForValue().get("user:captcha" + codeKey);
 
     //3 比较输入的验证码和 redis存储验证码是否一致
     if (StringUtils.isEmpty(captcha) || StringUtils.isEmpty(redisCaptcha) || !StringUtils.equalsIgnoreCase(captcha,
@@ -40,7 +43,7 @@ public class IndexServiceImpl implements IndexService {
       throw new AdminException(ResultCodeEnum.VALIDATE_CODE_ERROR);
     }
     //5 如果一致，删除redis里面验证码
-    redisTemplate.delete("user:validate" + codeKey);
+    redisTemplate.delete("user:captcha" + codeKey);
 
     //1 获取提交用户名，loginDto获取到
     String userName = loginDto.getUserName();
@@ -69,5 +72,22 @@ public class IndexServiceImpl implements IndexService {
 
     //9 返回loginvo对象
     return LoginVo.builder().token(token).build();
+  }
+
+  @Override
+  public CaptchaVo generateCaptcha() {
+    //1 通过工具生成图片验证码
+    //hutool
+    //int width, int height, int codeCount, int circleCount
+    CircleCaptcha circleCaptcha = CaptchaUtil.createCircleCaptcha(150, 48, 4, 2);
+    String codeValue = circleCaptcha.getCode();//4位验证码值
+    String imageBase64 = circleCaptcha.getImageBase64(); //返回图片验证码，base64编码
+
+    //2 把验证码存储到redis里面，设置redis的key： uuid   redis的value ：验证码值
+    String key = UUID.randomUUID().toString().replaceAll("-", "");
+    redisTemplate.opsForValue().set("user:captcha" + key, codeValue, 5, TimeUnit.MINUTES);
+
+    //3 返回ValidateCodeVo对象
+    return CaptchaVo.builder().codeKey(key).codeValue(imageBase64).build();
   }
 }
