@@ -3,8 +3,10 @@ package com.atguigu.spzx.admin.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.atguigu.spzx.admin.repository.IndexRepository;
 import com.atguigu.spzx.admin.service.IndexService;
+import com.atguigu.spzx.common.exception.AdminException;
 import com.atguigu.spzx.model.dto.system.LoginDto;
 import com.atguigu.spzx.model.entity.system.SysUser;
+import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
 import com.atguigu.spzx.model.vo.system.LoginVo;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,9 +34,10 @@ public class IndexServiceImpl implements IndexService {
     String redisCaptcha = redisTemplate.opsForValue().get("user:validate" + codeKey);
 
     //3 比较输入的验证码和 redis存储验证码是否一致
-    if (!StringUtils.equalsIgnoreCase(captcha, redisCaptcha)) {
+    if (StringUtils.isEmpty(captcha) || StringUtils.isEmpty(redisCaptcha) || !StringUtils.equalsIgnoreCase(captcha,
+        redisCaptcha)) {
       //4 如果不一致，提示用户，校验失败
-      throw new RuntimeException();
+      throw new AdminException(ResultCodeEnum.VALIDATE_CODE_ERROR);
     }
     //5 如果一致，删除redis里面验证码
     redisTemplate.delete("user:validate" + codeKey);
@@ -46,7 +49,7 @@ public class IndexServiceImpl implements IndexService {
     Optional<SysUser> optionalSysUser = indexRepository.findByUserName(userName);
     //3 如果根据用户名查不到对应信息，用户不存在，返回错误信息
     if (optionalSysUser.isEmpty()) {
-      throw new RuntimeException();
+      throw new AdminException(ResultCodeEnum.LOGIN_ERROR);
     }
 
     //4 如果根据用户名查询到用户信息，用户存在
@@ -55,7 +58,7 @@ public class IndexServiceImpl implements IndexService {
     //5 获取输入的密码，比较输入的密码和数据库密码是否一致
     if (!StringUtils.equals(sysUser.getPassword(), DigestUtils.md5DigestAsHex(loginDto.getPassword().getBytes()))) {
       //6 如果密码一致，登录成功，如果密码不一致登录失败
-      throw new RuntimeException();
+      throw new AdminException(ResultCodeEnum.LOGIN_ERROR);
     }
 
     //7 登录成功，生成用户唯一标识token
