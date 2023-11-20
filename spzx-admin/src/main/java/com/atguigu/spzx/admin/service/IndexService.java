@@ -11,4 +11,6 @@ public interface IndexService {
   LoginVo login(LoginDto loginDto);
 
   CaptchaVo generateCaptcha();
+
+  void logout(String token);
 }

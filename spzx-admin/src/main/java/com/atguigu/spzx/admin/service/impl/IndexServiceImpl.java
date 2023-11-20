@@ -90,4 +90,9 @@ public class IndexServiceImpl implements IndexService {
     //3 返回ValidateCodeVo对象
     return CaptchaVo.builder().codeKey(key).codeValue(imageBase64).build();
   }
+
+  @Override
+  public void logout(String token) {
+    redisTemplate.delete("user:login" + token);
+  }
 }
