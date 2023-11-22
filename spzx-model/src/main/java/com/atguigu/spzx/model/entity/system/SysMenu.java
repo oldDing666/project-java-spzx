@@ -2,11 +2,13 @@ package com.atguigu.spzx.model.entity.system;
 
 import com.atguigu.spzx.model.entity.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Entity;
 import java.util.List;
 import lombok.Data;
 
 @Schema(description = "系统菜单实体类")
 @Data
+@Entity
 public class SysMenu extends BaseEntity {
 
   @Schema(description = "父节点id")
