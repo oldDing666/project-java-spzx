@@ -3,6 +3,7 @@ package com.atguigu.spzx.model.entity.system;
 import com.atguigu.spzx.model.entity.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import java.util.List;
 import lombok.Data;
 
@@ -28,6 +29,7 @@ public class SysMenu extends BaseEntity {
 
   // 下级列表
   @Schema(description = "子节点")
+  @OneToMany
   private List<SysMenu> children;
 
 }
