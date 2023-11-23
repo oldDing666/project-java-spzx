@@ -2,8 +2,9 @@ package com.atguigu.spzx.model.entity.product;
 
 import com.atguigu.spzx.model.entity.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.List;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Schema(description = "分类实体类")

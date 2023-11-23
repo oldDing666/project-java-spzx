@@ -1,9 +1,10 @@
 package com.atguigu.spzx.model.dto.system;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
 
 @Data
 @Schema(description = "请求参数实体类")

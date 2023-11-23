@@ -2,9 +2,10 @@ package com.atguigu.spzx.model.entity.pay;
 
 import com.atguigu.spzx.model.entity.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.util.Date;
-import lombok.Data;
 
 @Data
 @Schema(description = "支付信息实体类")

@@ -2,10 +2,11 @@ package com.atguigu.spzx.model.entity.order;
 
 import com.atguigu.spzx.model.entity.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import lombok.Data;
 
 @Data
 @Schema(description = "OrderInfo")

@@ -2,8 +2,9 @@ package com.atguigu.spzx.model.entity.h5;
 
 import com.atguigu.spzx.model.entity.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.math.BigDecimal;
 import lombok.Data;
+
+import java.math.BigDecimal;
 
 @Data
 @Schema(description = "购物车实体类")

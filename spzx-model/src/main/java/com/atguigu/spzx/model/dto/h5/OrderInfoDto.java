@@ -1,9 +1,10 @@
 package com.atguigu.spzx.model.dto.h5;
 
 import com.atguigu.spzx.model.entity.order.OrderItem;
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.util.List;
-import lombok.Data;
 
 @Data
 public class OrderInfoDto {

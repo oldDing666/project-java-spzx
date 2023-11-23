@@ -2,12 +2,10 @@ package com.atguigu.spzx.model.entity.system;
 
 import com.atguigu.spzx.model.entity.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
 import lombok.Data;
 
 @Data
 @Schema(description = "系统用户实体类")
-@Entity
 public class SysUser extends BaseEntity {
 
   @Schema(description = "用户名")

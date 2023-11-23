@@ -4,9 +4,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.atguigu.spzx.model.entity.product.Product;
 import com.atguigu.spzx.model.entity.product.ProductSku;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
 
 @Data
 @Schema(description = "商品详情对象")

@@ -1,8 +1,9 @@
 package com.atguigu.spzx.model.dto.system;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.List;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Schema(description = "请求参数实体类")

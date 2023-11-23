@@ -2,8 +2,9 @@ package com.atguigu.spzx.model.entity.user;
 
 import com.atguigu.spzx.model.entity.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.Date;
 import lombok.Data;
+
+import java.util.Date;
 import lombok.EqualsAndHashCode;
 
 @Data
