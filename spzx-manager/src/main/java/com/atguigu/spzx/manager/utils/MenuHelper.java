@@ -17,7 +17,7 @@ public class MenuHelper {
     for (SysMenu sysMenu : sysMenuList) {
       //找到递归操作入口，第一层的菜单
       //条件： parent_id=0
-      if (sysMenu.getParentId().longValue() == 0) {
+      if (sysMenu.getParentId() == 0) {
         //根据第一层，找下层数据，使用递归完成
         //写方法实现找下层过程，
         // 方法里面传递两个参数：第一个参数当前第一层菜单，第二个参数是所有菜单集合

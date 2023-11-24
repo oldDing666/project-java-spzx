@@ -5,9 +5,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
+import lombok.EqualsAndHashCode;
 
 @Schema(description = "系统菜单实体类")
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SysMenu extends BaseEntity {
 
   @Schema(description = "父节点id")

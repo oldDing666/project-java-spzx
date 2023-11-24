@@ -3,8 +3,10 @@ package com.atguigu.spzx.model.entity.system;
 import com.atguigu.spzx.model.entity.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Schema(description = "角色实体类")
 public class SysRole extends BaseEntity {
 
