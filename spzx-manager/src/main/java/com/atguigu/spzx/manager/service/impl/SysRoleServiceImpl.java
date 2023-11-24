@@ -31,8 +31,7 @@ public class SysRoleServiceImpl implements SysRoleService {
         //根据条件查询所有数据
         List<SysRole> list = sysRoleMapper.findByPage(sysRoleDto);
         //封装pageInfo对象
-        PageInfo<SysRole> pageInfo = new PageInfo<>(list);
-        return pageInfo;
+        return new PageInfo<>(list);
     }
 
     //2 角色添加的方法
