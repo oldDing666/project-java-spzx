@@ -13,7 +13,7 @@ public interface SysUserService {
   LoginVo login(LoginDto loginDto);
 
   //获取当前登录用户信息
-  SysUser getUserInfo(String token);
+//  SysUser getUserInfo(String token);
 
   //用户退出
   void logout(String token);
