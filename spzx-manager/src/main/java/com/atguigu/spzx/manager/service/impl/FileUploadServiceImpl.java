@@ -9,7 +9,6 @@ import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
-import io.minio.errors.MinioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,7 +50,7 @@ public class FileUploadServiceImpl implements FileUploadService {
             // 20230910/u7r54209l097501.jpg
             String dateDir = DateUtil.format(new Date(), "yyyyMMdd");
             String uuid = UUID.randomUUID().toString().replaceAll("-","");
-            String filename = dateDir+"/"+uuid+file.getOriginalFilename();
+            String filename = dateDir+"/"+uuid+ file.getOriginalFilename();
 
             // 文件上传
             minioClient.putObject(
@@ -62,9 +61,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 
             //获取上传文件在minio路径
             //http://127.0.0.1:9000/spzx-bucket/01.jpg
-            String url = minioProperties.getEndpointUrl()+"/"+minioProperties.getBucketName()+"/"+filename;
-
-            return url;
+            return minioProperties.getEndpointUrl()+"/"+minioProperties.getBucketName()+"/"+filename;
         } catch (Exception e) {
             e.printStackTrace();
             throw new GuiguException(ResultCodeEnum.SYSTEM_ERROR);
