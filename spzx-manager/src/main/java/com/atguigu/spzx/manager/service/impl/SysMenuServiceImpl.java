@@ -11,7 +11,6 @@ import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
 import com.atguigu.spzx.model.vo.system.SysMenuVo;
 import com.atguigu.spzx.utils.AuthContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -87,7 +86,7 @@ public class SysMenuServiceImpl implements SysMenuService {
     @Override
     public List<SysMenuVo> findMenusByUserId() {
         //获取当前用户id
-        SysUser sysUser = AuthContextUtil.get();
+        SysUser sysUser = AuthContextUtil.getAdminUser();
         Long userId = sysUser.getId();
 
         //根据userId查询可以操作菜单

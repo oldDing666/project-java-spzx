@@ -5,9 +5,7 @@ import com.atguigu.spzx.cart.service.CartService;
 import com.atguigu.spzx.feign.product.ProductFeignClient;
 import com.atguigu.spzx.model.entity.h5.CartInfo;
 import com.atguigu.spzx.model.entity.product.ProductSku;
-import com.atguigu.spzx.model.entity.user.UserInfo;
 import com.atguigu.spzx.utils.AuthContextUtil;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -37,7 +35,7 @@ public class CartServiceImpl implements CartService {
     public void addToCart(Long skuId, Integer skuNum) {
         //1 必须登录状态，获取当前登录用户id（作为redis的hash类型的key值）
         //从ThreadLocal获取用户信息就可以了
-        Long userId = AuthContextUtil.getUserInfo().getId();
+        Long userId = AuthContextUtil.getCustomerUser().getId();
         //构建hash类型key名称
         String cartKey = this.getCartKey(userId);
 
@@ -86,7 +84,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<CartInfo> getCartList() {
         //1 构建查询的redis里面key值，根据当前userId
-        Long userId = AuthContextUtil.getUserInfo().getId();
+        Long userId = AuthContextUtil.getCustomerUser().getId();
         String cartKey = this.getCartKey(userId);
 
         //2 根据key从redis里面hash类型获取所有value值 cartInfo
@@ -107,7 +105,7 @@ public class CartServiceImpl implements CartService {
     //删除购物车商品
     @Override
     public void deleteCart(Long skuId) {
-        Long userId = AuthContextUtil.getUserInfo().getId();
+        Long userId = AuthContextUtil.getCustomerUser().getId();
         String cartKey = this.getCartKey(userId);
 
         redisTemplate.opsForHash().delete(cartKey,String.valueOf(skuId));
@@ -117,7 +115,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void checkCart(Long skuId, Integer isChecked) {
         //1 构建查询的redis里面key值，根据当前userId
-        Long userId = AuthContextUtil.getUserInfo().getId();
+        Long userId = AuthContextUtil.getCustomerUser().getId();
         String cartKey = this.getCartKey(userId);
 
         //2 判断key是否包含filed
@@ -142,7 +140,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void allCheckCart(Integer isChecked) {
         //1 构建查询的redis里面key值，根据当前userId
-        Long userId = AuthContextUtil.getUserInfo().getId();
+        Long userId = AuthContextUtil.getCustomerUser().getId();
         String cartKey = this.getCartKey(userId);
 
         //2 根据key获取购物车所有value值
@@ -169,7 +167,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void clearCart() {
         //1 构建查询的redis里面key值，根据当前userId
-        Long userId = AuthContextUtil.getUserInfo().getId();
+        Long userId = AuthContextUtil.getCustomerUser().getId();
         String cartKey = this.getCartKey(userId);
 
         //2 根据key删除redis里面数据
@@ -180,7 +178,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<CartInfo> getAllCkecked() {
         //获取userid，构建key
-        Long userId = AuthContextUtil.getUserInfo().getId();
+        Long userId = AuthContextUtil.getCustomerUser().getId();
         String cartKey = this.getCartKey(userId);
 
         //根据key获取购物车所有商品
@@ -201,7 +199,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void deleteChecked() {
         //获取userid，构建key
-        Long userId = AuthContextUtil.getUserInfo().getId();
+        Long userId = AuthContextUtil.getCustomerUser().getId();
         String cartKey = this.getCartKey(userId);
 
         //根据key获取redis所有value值

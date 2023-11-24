@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -115,7 +114,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 //        }
 //        UserInfo userInfo = JSON.parseObject(userJson, UserInfo.class);
         //从ThreadLocal获取用户信息
-        UserInfo userInfo = AuthContextUtil.getUserInfo();
+        UserInfo userInfo = AuthContextUtil.getCustomerUser();
         //userInfo  ---- UserInfoVo
         UserInfoVo userInfoVo = new UserInfoVo();
         BeanUtils.copyProperties(userInfo,userInfoVo);

@@ -18,7 +18,7 @@ public class UserAddressServiceImpl implements UserAddressService {
     //获取用户地址列表
     @Override
     public List<UserAddress> findUserAddressList() {
-        Long userId = AuthContextUtil.getUserInfo().getId();
+        Long userId = AuthContextUtil.getCustomerUser().getId();
         return userAddressMapper.findUserAddressList(userId);
     }
 

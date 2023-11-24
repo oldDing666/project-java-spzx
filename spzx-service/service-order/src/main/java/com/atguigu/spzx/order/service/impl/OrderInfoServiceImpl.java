@@ -21,7 +21,6 @@ import com.atguigu.spzx.order.service.OrderInfoService;
 import com.atguigu.spzx.utils.AuthContextUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -110,7 +109,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         //4 添加数据到order_info表
         // 封装数据到OrderInfo对象
         OrderInfo orderInfo = new OrderInfo();
-        UserInfo userInfo = AuthContextUtil.getUserInfo();
+        UserInfo userInfo = AuthContextUtil.getCustomerUser();
         //订单编号
         orderInfo.setOrderNo(String.valueOf(System.currentTimeMillis()));
         //用户id
@@ -196,7 +195,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     public PageInfo<OrderInfo> findOrderPage(Integer page, Integer limit, Integer orderStatus) {
         PageHelper.startPage(page,limit);
         //查询订单信息
-        Long userId = AuthContextUtil.getUserInfo().getId();
+        Long userId = AuthContextUtil.getCustomerUser().getId();
         List<OrderInfo> orderInfoList = orderInfoMapper.findUserPage(userId,orderStatus);
 
         //订单里面所有订单项

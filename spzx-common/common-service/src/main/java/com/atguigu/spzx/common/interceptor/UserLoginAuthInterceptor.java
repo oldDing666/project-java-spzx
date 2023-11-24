@@ -21,7 +21,7 @@ public class UserLoginAuthInterceptor implements HandlerInterceptor {
     String token = request.getHeader("token");
     String userJson = redisTemplate.opsForValue().get("user:spzx:" + token);
     //放到threadLocal里面
-    AuthContextUtil.setUserInfo(JSON.parseObject(userJson, UserInfo.class));
+    AuthContextUtil.setCustomerUser(JSON.parseObject(userJson, UserInfo.class));
     return true;
   }
 }

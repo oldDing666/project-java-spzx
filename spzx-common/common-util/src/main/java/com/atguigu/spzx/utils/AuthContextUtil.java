@@ -5,40 +5,40 @@ import com.atguigu.spzx.model.entity.user.UserInfo;
 
 public class AuthContextUtil {
 
-  private static final ThreadLocal<UserInfo> userInfoThreadLocal = new ThreadLocal<>();
+  private static final ThreadLocal<UserInfo> customerUserThreadLocal = new ThreadLocal<>();
 
 
   // 定义存储数据的静态方法
-  public static void setUserInfo(UserInfo userInfo) {
-    userInfoThreadLocal.set(userInfo);
+  public static void setCustomerUser(UserInfo userInfo) {
+    customerUserThreadLocal.set(userInfo);
   }
 
   // 定义获取数据的方法
-  public static UserInfo getUserInfo() {
-    return userInfoThreadLocal.get();
+  public static UserInfo getCustomerUser() {
+    return customerUserThreadLocal.get();
   }
 
   // 删除数据的方法
-  public static void removeUserInfo() {
-    userInfoThreadLocal.remove();
+  public static void removeCustomerUser() {
+    customerUserThreadLocal.remove();
   }
 
 
   //创建threadLocal对象
-  private static final ThreadLocal<SysUser> threadLocal = new ThreadLocal<>();
+  private static final ThreadLocal<SysUser> adminUserThreadLocal = new ThreadLocal<>();
 
   //添加数据
-  public static void set(SysUser sysUser) {
-    threadLocal.set(sysUser);
+  public static void setAdminUser(SysUser sysUser) {
+    adminUserThreadLocal.set(sysUser);
   }
 
   //获取数据
-  public static SysUser get() {
-    return threadLocal.get();
+  public static SysUser getAdminUser() {
+    return adminUserThreadLocal.get();
   }
 
   //删除数据
-  public static void remove() {
-    threadLocal.remove();
+  public static void removeAdminUser() {
+    adminUserThreadLocal.remove();
   }
 }
