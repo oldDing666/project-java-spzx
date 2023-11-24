@@ -100,12 +100,16 @@ public class SysUserServiceImpl implements SysUserService {
   }
 
   //获取当前登录用户信息
-//    @Override
-//    public SysUser getUserInfo(String token) {
-//        String userJson = redisTemplate.opsForValue().get("user:login" + token);
-//        SysUser sysUser = JSON.parseObject(userJson, SysUser.class);
-//        return sysUser;
-//    }
+  /**
+   * // @Override
+   * public SysUser getUserInfo(String token)
+   * {
+   * String userJson =
+   * redisTemplate.opsForValue().get("user:login" + token);
+   * SysUser sysUser = JSON.parseObject(userJson, SysUser.class);
+   * return sysUser;
+   * }
+   */
 
   //用户退出
   @Override
@@ -115,13 +119,10 @@ public class SysUserServiceImpl implements SysUserService {
 
   //1 用户条件分页查询接口
   @Override
-  public PageInfo<SysUser> findByPage(Integer pageNum,
-      Integer pageSize,
-      SysUserDto sysUserDto) {
+  public PageInfo<SysUser> findByPage(Integer pageNum, Integer pageSize, SysUserDto sysUserDto) {
     PageHelper.startPage(pageNum, pageSize);
     List<SysUser> list = sysUserMapper.findByPage(sysUserDto);
-    PageInfo<SysUser> pageInfo = new PageInfo<>(list);
-    return pageInfo;
+    return new PageInfo<>(list);
   }
 
   //2 用户添加
@@ -163,15 +164,12 @@ public class SysUserServiceImpl implements SysUserService {
   public void doAssign(AssginRoleDto assginRoleDto) {
     //1 根据userId删除用户之前分配角色数据
     sysRoleUserMapper.deleteByUserId(assginRoleDto.getUserId());
-
-    //TODO 为了测试，模拟异常
-    //        int a = 1/0;
-
     //2 重新分配新数据
     List<Long> roleIdList = assginRoleDto.getRoleIdList();
     //遍历得到每个角色id
-    for (Long roleId : roleIdList) {
-      sysRoleUserMapper.doAssign(assginRoleDto.getUserId(), roleId);
-    }
+//    for (Long roleId : roleIdList) {
+//      sysRoleUserMapper.doAssign(assginRoleDto.getUserId(), roleId);
+//    }
+    sysRoleUserMapper.doAssign(assginRoleDto.getUserId(), roleIdList);
   }
 }
