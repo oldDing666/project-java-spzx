@@ -13,27 +13,26 @@ import java.util.List;
 @Service
 public class BrandServiceImpl implements BrandService {
 
-    @Autowired
-    private BrandMapper brandMapper;
+  @Autowired
+  private BrandMapper brandMapper;
 
-    //列表
-    @Override
-    public PageInfo<Brand> findByPage(Integer page, Integer limit) {
-        PageHelper.startPage(page,limit);
-        List<Brand> list = brandMapper.findByPage();
-        PageInfo<Brand> pageInfo = new PageInfo<>(list);
-        return pageInfo;
-    }
+  //列表
+  @Override
+  public PageInfo<Brand> findByPage(Integer page, Integer limit) {
+    PageHelper.startPage(page, limit);
+    List<Brand> list = brandMapper.findByPage();
+    return new PageInfo<>(list);
+  }
 
-    //添加
-    @Override
-    public void save(Brand brand) {
-        brandMapper.save(brand);
-    }
+  //添加
+  @Override
+  public void save(Brand brand) {
+    brandMapper.save(brand);
+  }
 
-    //查询所有品牌
-    @Override
-    public List<Brand> findAll() {
-        return brandMapper.findByPage();
-    }
+  //查询所有品牌
+  @Override
+  public List<Brand> findAll() {
+    return brandMapper.findByPage();
+  }
 }
