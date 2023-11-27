@@ -5,8 +5,6 @@ import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.util.ListUtils;
 import com.atguigu.spzx.manager.mapper.CategoryMapper;
 import com.atguigu.spzx.model.vo.product.CategoryExcelVo;
-import org.apache.poi.ss.formula.functions.T;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class ExcelListener<T> implements ReadListener<T> {
     private List<T> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
 
     //构造传递mapper，操作数据库
-    private CategoryMapper categoryMapper;
+    private final CategoryMapper categoryMapper;
     public ExcelListener(CategoryMapper categoryMapper) {
         this.categoryMapper = categoryMapper;
     }
@@ -50,6 +48,6 @@ public class ExcelListener<T> implements ReadListener<T> {
 
     //保存的方法
     private void saveData() {
-        categoryMapper.batchInsert((List<CategoryExcelVo>)cachedDataList);
+        categoryMapper.batchInsert((List<CategoryExcelVo>) cachedDataList);
     }
 }

@@ -20,7 +20,7 @@ public class CategoryController {
 
     //导入
     @PostMapping("/importData")
-    public Result importData(MultipartFile file) {
+    public Result<?> importData(MultipartFile file) {
         //获取上传文件
         categoryService.importData(file);
         return Result.build(null, ResultCodeEnum.SUCCESS);
@@ -35,7 +35,7 @@ public class CategoryController {
     //分类列表，每次查询一层数据
     // SELECT * FROM category WHERE parent_id=id
     @GetMapping("/findCategoryList/{id}")
-    public Result findCategoryList(@PathVariable Long id) {
+    public Result<List<Category>> findCategoryList(@PathVariable Long id) {
         List<Category> list = categoryService.findCategoryList(id);
         return Result.build(list, ResultCodeEnum.SUCCESS);
     }
