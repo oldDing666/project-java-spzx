@@ -16,32 +16,31 @@ import java.util.List;
 @RequestMapping(value = "/admin/product/categoryBrand")
 public class CategoryBrandController {
 
-    @Autowired
-    private CategoryBrandService categoryBrandService ;
+  @Autowired
+  private CategoryBrandService categoryBrandService;
 
-    //根据分类id查询对应品牌数据
-    @GetMapping("/findBrandByCategoryId/{categoryId}")
-    public Result findBrandByCategoryId(@PathVariable Long categoryId) {
-        List<Brand> list = categoryBrandService.findBrandByCategoryId(categoryId);
-        return Result.build(list,ResultCodeEnum.SUCCESS);
-    }
+  //根据分类id查询对应品牌数据
+  @GetMapping("/findBrandByCategoryId/{categoryId}")
+  public Result<List<Brand>> findBrandByCategoryId(@PathVariable Long categoryId) {
+    List<Brand> list = categoryBrandService.findBrandByCategoryId(categoryId);
+    return Result.build(list, ResultCodeEnum.SUCCESS);
+  }
 
-    //添加
-    @PostMapping("/save")
-    public Result save(@RequestBody CategoryBrand categoryBrand) {
-        categoryBrandService.save(categoryBrand);
-        return Result.build(null, ResultCodeEnum.SUCCESS);
-    }
+  //添加
+  @PostMapping("/save")
+  public Result<?> save(@RequestBody CategoryBrand categoryBrand) {
+    categoryBrandService.save(categoryBrand);
+    return Result.build(null, ResultCodeEnum.SUCCESS);
+  }
 
-    //分类品牌条件分页查询
-    @GetMapping("/{page}/{limit}")
-    public Result findByPage(@PathVariable Integer page,
-                             @PathVariable Integer limit,
-                             CategoryBrandDto categoryBrandDto) {
-        PageInfo<CategoryBrand> pageInfo =
-                categoryBrandService.findByPage(page,limit,categoryBrandDto);
-        return Result.build(pageInfo, ResultCodeEnum.SUCCESS);
-    }
+  //分类品牌条件分页查询
+  @GetMapping("/{page}/{limit}")
+  public Result<PageInfo<CategoryBrand>> findByPage(@PathVariable Integer page, @PathVariable Integer limit,
+      CategoryBrandDto categoryBrandDto) {
+    PageInfo<CategoryBrand> pageInfo =
+        categoryBrandService.findByPage(page, limit, categoryBrandDto);
+    return Result.build(pageInfo, ResultCodeEnum.SUCCESS);
+  }
 
-    //TODO 修改 和  删除
+  //TODO 修改 和  删除
 }
