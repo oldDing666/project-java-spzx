@@ -8,17 +8,17 @@ import java.util.List;
 @Mapper
 public interface ProductSpecMapper {
 
-    //列表
-    List<ProductSpec> findByPage();
+  //列表
+  List<ProductSpec> findByPage();
 
-    //添加
-    void save(ProductSpec productSpec);
+  //添加
+  void save(ProductSpec productSpec);
 
-    //修改
-    void update(ProductSpec productSpec);
+  //修改
+  void update(ProductSpec productSpec);
 
-    //删除
-    void delete(Long id);
+  //删除
+  void delete(Long id);
 
-    List<ProductSpec> findAll();
+  List<ProductSpec> findAll();
 }
