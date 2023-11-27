@@ -11,11 +11,11 @@ import java.util.List;
 @Service
 public class ProductUnitServiceImpl implements ProductUnitService {
 
-    @Autowired
-    private ProductUnitMapper productUnitMapper ;
+  @Autowired
+  private ProductUnitMapper productUnitMapper;
 
-    @Override
-    public List<ProductUnit> findAll() {
-        return productUnitMapper.findAll();
-    }
+  @Override
+  public List<ProductUnit> findAll() {
+    return productUnitMapper.findAll();
+  }
 }

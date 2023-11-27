@@ -7,5 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface ProductUnitMapper {
-    List<ProductUnit> findAll();
+
+  List<ProductUnit> findAll();
 }

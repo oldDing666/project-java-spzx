@@ -15,12 +15,12 @@ import java.util.List;
 @RequestMapping("/admin/product/productUnit")
 public class ProductUnitController {
 
-    @Autowired
-    private ProductUnitService productUnitService;
+  @Autowired
+  private ProductUnitService productUnitService;
 
-    @GetMapping("/findAll")
-    public Result findAll() {
-        List<ProductUnit> list = productUnitService.findAll();
-        return Result.build(list, ResultCodeEnum.SUCCESS);
-    }
+  @GetMapping("/findAll")
+  public Result<List<ProductUnit>> findAll() {
+    List<ProductUnit> list = productUnitService.findAll();
+    return Result.build(list, ResultCodeEnum.SUCCESS);
+  }
 }
