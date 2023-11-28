@@ -9,8 +9,8 @@ import java.util.List;
 @Mapper
 public interface OrderStatisticsMapper {
 
-    //3 把统计之后的数据，添加统计结果表里面
-    void insert(OrderStatistics orderStatistics);
+  //3 把统计之后的数据，添加统计结果表里面
+  void insert(OrderStatistics orderStatistics);
 
-    List<OrderStatistics> selectList(OrderStatisticsDto orderStatisticsDto);
+  List<OrderStatistics> selectList(OrderStatisticsDto orderStatisticsDto);
 }

@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value="/admin/order/orderInfo")
+@RequestMapping(value = "/admin/order/orderInfo")
 public class OrderInfoController {
 
-    @Autowired
-    private OrderInfoService orderInfoService ;
+  @Autowired
+  private OrderInfoService orderInfoService;
 
-    @GetMapping("/getOrderStatisticsData")
-    public Result getOrderStatisticsData(OrderStatisticsDto orderStatisticsDto) {
-        OrderStatisticsVo orderStatisticsVo =
-                orderInfoService.getOrderStatisticsData(orderStatisticsDto);
-        return Result.build(orderStatisticsVo, ResultCodeEnum.SUCCESS);
-    }
+  @GetMapping("/getOrderStatisticsData")
+  public Result<OrderStatisticsVo> getOrderStatisticsData(OrderStatisticsDto orderStatisticsDto) {
+    OrderStatisticsVo orderStatisticsVo =
+        orderInfoService.getOrderStatisticsData(orderStatisticsDto);
+    return Result.build(orderStatisticsVo, ResultCodeEnum.SUCCESS);
+  }
 }

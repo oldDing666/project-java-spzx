@@ -5,5 +5,5 @@ import com.atguigu.spzx.model.vo.order.OrderStatisticsVo;
 
 public interface OrderInfoService {
 
-    OrderStatisticsVo getOrderStatisticsData(OrderStatisticsDto orderStatisticsDto);
+  OrderStatisticsVo getOrderStatisticsData(OrderStatisticsDto orderStatisticsDto);
 }
