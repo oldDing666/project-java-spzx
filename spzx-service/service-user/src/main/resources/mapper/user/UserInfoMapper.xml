@@ -3,15 +3,15 @@
 
 <mapper namespace="com.atguigu.spzx.user.mapper.UserInfoMapper">
 
-    <resultMap id="userInfoMap" type="com.atguigu.spzx.model.entity.user.UserInfo" autoMapping="true">
-    </resultMap>
+  <resultMap id="userInfoMap" type="com.atguigu.spzx.model.entity.user.UserInfo" autoMapping="true">
+  </resultMap>
 
-    <!-- 用于select查询公用抽取的列 -->
-    <sql id="columns">
+  <!-- 用于select查询公用抽取的列 -->
+  <sql id="columns">
         id,username,password,nick_name,avatar,sex,phone,memo,open_id,union_id,last_login_ip,last_login_time,status,create_time,update_time,is_deleted
     </sql>
 
-    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+  <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into user_info (
             id,
             username,
@@ -43,10 +43,11 @@
                  )
     </insert>
 
-    <select id="selectByUsername" resultMap="userInfoMap">
-        select <include refid="columns" />
-        from user_info
-        where
-        username = #{username}
-    </select>
+  <select id="selectByUsername" resultMap="userInfoMap">
+    select
+    <include refid="columns"/>
+    from user_info
+    where
+    username = #{username}
+  </select>
 </mapper>

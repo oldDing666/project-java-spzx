@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserInfoMapper {
 
-    //3 校验用户名不能重复
-    UserInfo selectByUsername(String username);
+  //3 校验用户名不能重复
+  UserInfo selectByUsername(String username);
 
-    //注册
-    void save(UserInfo userInfo);
+  //注册
+  void save(UserInfo userInfo);
 }
