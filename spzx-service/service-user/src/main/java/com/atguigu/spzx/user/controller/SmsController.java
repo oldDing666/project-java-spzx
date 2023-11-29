@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user/sms")
 public class SmsController {
 
-    @Autowired
-    private SmsService smsService;
+  @Autowired
+  private SmsService smsService;
 
-    @GetMapping(value = "/sendCode/{phone}")
-    public Result sendCode(@PathVariable String phone) {
-        smsService.sendCode(phone);
-        return Result.build(null, ResultCodeEnum.SUCCESS);
-    }
+  @GetMapping(value = "/sendCode/{phone}")
+  public Result<?> sendCode(@PathVariable String phone) {
+    smsService.sendCode(phone);
+    return Result.build(null, ResultCodeEnum.SUCCESS);
+  }
 }
