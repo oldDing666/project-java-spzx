@@ -8,9 +8,9 @@ import java.util.List;
 @Mapper
 public interface CategoryMapper {
 
-    //查询所有一级分类
-    List<Category> selectOneCategory();
+  //查询所有一级分类
+  List<Category> selectOneCategory();
 
-    //1 查询所有分类 返回list集合
-    List<Category> findAll();
+  //1 查询所有分类 返回list集合
+  List<Category> findAll();
 }
