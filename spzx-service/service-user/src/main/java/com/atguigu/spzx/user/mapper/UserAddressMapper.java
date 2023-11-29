@@ -8,8 +8,8 @@ import java.util.List;
 @Mapper
 public interface UserAddressMapper {
 
-    //获取用户地址列表
-    List<UserAddress> findUserAddressList(Long userId);
+  //获取用户地址列表
+  List<UserAddress> findUserAddressList(Long userId);
 
-    UserAddress getUserAddress(Long id);
+  UserAddress getUserAddress(Long id);
 }

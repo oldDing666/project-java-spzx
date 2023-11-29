@@ -12,21 +12,21 @@ import java.util.List;
 @Service
 public class UserAddressServiceImpl implements UserAddressService {
 
-    @Autowired
-    private UserAddressMapper userAddressMapper;
+  @Autowired
+  private UserAddressMapper userAddressMapper;
 
-    //获取用户地址列表
-    @Override
-    public List<UserAddress> findUserAddressList() {
-        Long userId = AuthContextUtil.getCustomerUser().getId();
-        return userAddressMapper.findUserAddressList(userId);
-    }
+  //获取用户地址列表
+  @Override
+  public List<UserAddress> findUserAddressList() {
+    Long userId = AuthContextUtil.getCustomerUser().getId();
+    return userAddressMapper.findUserAddressList(userId);
+  }
 
-    //根据id获取收货地址信息
-    @Override
-    public UserAddress getUserAddress(Long id) {
-        return userAddressMapper.getUserAddress(id);
-    }
+  //根据id获取收货地址信息
+  @Override
+  public UserAddress getUserAddress(Long id) {
+    return userAddressMapper.getUserAddress(id);
+  }
 
 
 }
