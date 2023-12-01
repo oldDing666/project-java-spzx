@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface BrandService {
 
-    //获取全部品牌
-    List<Brand> findAll();
+  //获取全部品牌
+  List<Brand> findAll();
 }

@@ -7,5 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface BrandMapper {
-    List<Brand> findAll();
+
+  List<Brand> findAll();
 }

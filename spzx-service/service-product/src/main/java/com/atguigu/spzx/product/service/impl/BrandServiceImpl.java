@@ -11,12 +11,12 @@ import java.util.List;
 @Service
 public class BrandServiceImpl implements BrandService {
 
-    @Autowired
-    private BrandMapper brandMapper;
+  @Autowired
+  private BrandMapper brandMapper;
 
-    //获取全部品牌
-    @Override
-    public List<Brand> findAll() {
-        return brandMapper.findAll();
-    }
+  //获取全部品牌
+  @Override
+  public List<Brand> findAll() {
+    return brandMapper.findAll();
+  }
 }
