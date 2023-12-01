@@ -15,33 +15,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value="/api/product")
+@RequestMapping(value = "/api/product")
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
+  @Autowired
+  private ProductService productService;
 
-    //商品详情接口
-    @Operation(summary = "商品详情")
-    @GetMapping("item/{skuId}")
-    public Result item(@PathVariable Long skuId) {
-        ProductItemVo productItemVo = productService.item(skuId);
-        return Result.build(productItemVo,ResultCodeEnum.SUCCESS);
-    }
+  @Operation(summary = "商品详情")
+  @GetMapping("item/{skuId}")
+  public Result<ProductItemVo> item(@PathVariable Long skuId) {
+    ProductItemVo productItemVo = productService.item(skuId);
+    return Result.build(productItemVo, ResultCodeEnum.SUCCESS);
+  }
 
-    @Operation(summary = "分页查询")
-    @GetMapping(value = "/{page}/{limit}")
-    public Result list(@PathVariable Integer page,
-                       @PathVariable Integer limit,
-                       ProductSkuDto productSkuDto) {
-       PageInfo<ProductSku> pageInfo = productService.findByPage(page,limit,productSkuDto);
-       return Result.build(pageInfo, ResultCodeEnum.SUCCESS);
-    }
+  @Operation(summary = "分页查询")
+  @GetMapping(value = "/{page}/{limit}")
+  public Result<PageInfo<ProductSku>> list(@PathVariable Integer page, @PathVariable Integer limit,
+      ProductSkuDto productSkuDto) {
+    PageInfo<ProductSku> pageInfo = productService.findByPage(page, limit, productSkuDto);
+    return Result.build(pageInfo, ResultCodeEnum.SUCCESS);
+  }
 
-    //远程调用：根据skuId返回sku信息
-    @GetMapping("/getBySkuId/{skuId}")
-    public ProductSku getBySkuId(@PathVariable Long skuId) {
-        ProductSku productSku = productService.getBySkuId(skuId);
-        return productSku;
-    }
+  //远程调用：根据skuId返回sku信息
+  @GetMapping("/getBySkuId/{skuId}")
+  public ProductSku getBySkuId(@PathVariable Long skuId) {
+    return productService.getBySkuId(skuId);
+  }
 }

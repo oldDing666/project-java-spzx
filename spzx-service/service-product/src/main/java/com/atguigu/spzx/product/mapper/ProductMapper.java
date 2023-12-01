@@ -6,6 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ProductMapper {
 
-    //productId，获取商品信息
-    Product getById(Long productId);
+  //productId，获取商品信息
+  Product getById(Long productId);
 }
