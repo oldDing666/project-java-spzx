@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Map;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PaymentInfoServiceImpl implements PaymentInfoService {
@@ -52,6 +53,7 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
 
     //支付完成，更新状态
     @Override
+    @Transactional
     public void updatePaymentStatus(Map<String, String> map) {
        // map.get("out_trade_no")
         //1 根据订单编号查询支付记录信息

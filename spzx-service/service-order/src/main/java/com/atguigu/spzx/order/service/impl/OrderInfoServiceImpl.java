@@ -57,7 +57,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
   public TradeVo getTrade() {
 
     //远程调用获取购物车选中商品列表
-    List<CartInfo> cartInfoList = cartFeignClient.getAllCkecked();
+    List<CartInfo> cartInfoList = cartFeignClient.getAllChecked();
     //创建list集合用于封装订单项
     List<OrderItem> orderItemList = new ArrayList<>();
     for (CartInfo cartInfo : cartInfoList) {

@@ -10,9 +10,9 @@ import java.util.List;
 @FeignClient(value = "service-cart")
 public interface CartFeignClient {
 
-    @GetMapping("/api/order/cart/auth/deleteChecked")
-    public Result deleteChecked();
+  @GetMapping("/api/order/cart/auth/deleteChecked")
+  Result<?> deleteChecked();
 
-    @GetMapping(value = "/api/order/cart/auth/getAllCkecked")
-    public List<CartInfo> getAllCkecked();
+  @GetMapping(value = "/api/order/cart/auth/getAllCkecked")
+  List<CartInfo> getAllChecked();
 }
