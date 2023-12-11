@@ -20,8 +20,7 @@ public class SysUserController {
   //1 用户条件分页查询接口
   @GetMapping(value = "/findByPage/{pageNum}/{pageSize}")
   public Result<PageInfo<SysUser>> findByPage(@PathVariable("pageNum") Integer pageNum,
-      @PathVariable("pageSize") Integer pageSize,
-      SysUserDto sysUserDto) {
+      @PathVariable("pageSize") Integer pageSize, SysUserDto sysUserDto) {
     PageInfo<SysUser> pageInfo = sysUserService.findByPage(pageNum, pageSize, sysUserDto);
     return Result.build(pageInfo, ResultCodeEnum.SUCCESS);
   }

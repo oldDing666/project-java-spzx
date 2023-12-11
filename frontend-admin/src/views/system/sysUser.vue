@@ -20,8 +20,8 @@
               range-separator="To"
               start-placeholder="开始时间"
               end-placeholder="结束时间"
-              format="YYYY-MM-DD"
-              value-format="YYYY-MM-DD"
+              format="YYYY-MM-DD HH:mm:ss"
+              value-format="YYYY-MM-DD HH:mm:ss"
             />
           </el-form-item>
         </el-col>
@@ -300,6 +300,13 @@ const fetchData = async () => {
 
 //搜索方法
 const searchSysUser = () => {
+  fetchData()
+}
+
+const resetData = () => {
+  queryDto.value.keyword = ''
+  queryDto.value.createTimeBegin = ''
+  queryDto.value.createTimeEnd = ''
   fetchData()
 }
 </script>
