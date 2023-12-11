@@ -19,8 +19,9 @@
   <!--    </insert>-->
   <insert id="doAssign">
     insert into sys_user_role(user_id , role_id , create_time , update_time , is_deleted)
-    <foreach collection="roleIds" item="roleId">
-      values ( #{userId} , #{roleId} , now() , now() , 0)
+    values
+    <foreach collection="roleIds" item="roleId" separator=",">
+      ( #{userId} , #{roleId} , now() , now() , 0)
     </foreach>
   </insert>
 </mapper>
