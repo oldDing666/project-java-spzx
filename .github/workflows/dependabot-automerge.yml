@@ -1,0 +1,19 @@
+name: Dependabot Auto-merge
+on:
+  pull_request:
+    types: [opened, synchronize]
+  repository_dispatch:
+    types: [update]
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+  statuses: read
+
+jobs:
+  dependabot-automerge:
+    if: startsWith(github.head_ref, 'dependabot/')
+    with:
+      compatibility-check: 'true'
+    uses: oldDing666/project-java-spzx/.github/workflows/automerge.yml@main

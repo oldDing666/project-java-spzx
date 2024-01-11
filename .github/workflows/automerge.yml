@@ -1,0 +1,113 @@
+name: Dependabot Auto-merge
+on:
+  workflow_call:
+    inputs:
+      compatibility-check:
+        description: 'Check if the PR has a compatibility score of 80% or above'
+        default: 'false'
+        required: false
+        type: string
+
+jobs:
+  setup: # gathers info about the PR.
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch pull-request metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          compat-lookup: true
+
+      - name: Check if compatibility score is less than 80
+        id: check-score
+        run: |
+          score=${{ steps.metadata.outputs.compatibility-score }}
+          if [[ $score == 'unknown' || $score -lt 80 ]]; then
+            echo "score-less-than-80=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "score-less-than-80=false" >> "$GITHUB_OUTPUT"
+          fi
+
+    outputs:
+      pr-url: ${{ github.event.pull_request.html_url }}
+      compatibility-score: ${{ steps.metadata.outputs.compatibility-score }}
+      update-type: ${{ steps.metadata.outputs.update-type }}
+      dependency-type: ${{ steps.metadata.outputs.dependency-type }}
+      score-less-than-80: ${{ steps.check-score.outputs.score-less-than-80 }}
+
+  comment: # runs if compatibility-check is true and adds a comment to the PR if the compatibility score is unknown or < 80.
+    needs: [setup]
+    if: ${{ inputs.compatibility-check  == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug step
+        run: "echo Test Score less than 80 is ${{ needs.setup.outputs.score-less-than-80 }}"
+
+      - name: Add comment if the compatibility score is 'unknown' or 'below 80%'
+        if: needs.setup.outputs.score-less-than-80 == 'true'
+        run: gh pr comment $PR_URL -b "Requires manual review as compatibility score is unknown or is below 80%"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ needs.setup.outputs.pr-url }}
+
+  approve: # approves PR if patch or minor update, denying most others.
+    needs: [setup]
+    if:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Approve pull-request or request manual
+        if: >-
+          ${{ inputs.compatibility-check  == 'false'
+          ||
+          (inputs.compatibility-check  == 'true' && needs.setup.outputs.score-less-than-80 == 'false') }}
+        run: |
+          # patch + minor.
+          if [[ "$UPDATE_TYPE" == "version-update:semver-patch" || "$UPDATE_TYPE" == "version-update:semver-minor" ]]; then
+            case "$(gh pr status --json reviewDecision -q .currentBranch.reviewDecision)" in
+              APPROVED) echo "PR already approved!" ;;
+              *) gh pr review "$PR_URL" --approve -b "Approving PR, as changes are patch or minor updates." ;;
+              esac
+          fi
+          # major.
+          if [[ "$UPDATE_TYPE" == "version-update:semver-major" && "$DEPENDENCY_TYPE" == "direct:production" ]]; then
+              gh pr comment "$PR_URL" -b "PR not approved, requires manual review as it includes a major update of a dependency used in production."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ needs.setup.outputs.pr-url }}
+          UPDATE_TYPE: ${{ needs.setup.outputs.update-type }}
+          DEPENDENCY_TYPE: ${{ needs.setup.outputs.dependency-type }}
+
+      - name: Determine pull request status
+        id: pr-status
+        run: |
+          verdict=false
+          decision="$(gh pr view "$PR_URL" --json reviewDecision -q '.reviewDecision')"
+          [[ $decision == 'APPROVED' ]] && { verdict=true; }
+          echo "pr-approved=$verdict" >> "$GITHUB_OUTPUT"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ needs.setup.outputs.pr-url }}
+
+    outputs:
+      pr-approved: ${{ steps.pr-status.outputs.pr-approved }}
+
+  merge: # merge PR, if all success conditions above are met.
+    needs: [setup, approve]
+    if: ${{ needs.approve.outputs.pr-approved == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Auto-merge Dependabot PRs
+        run: |
+          gh pr merge --auto --merge "$PR_URL"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ needs.setup.outputs.pr-url }}
