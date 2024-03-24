@@ -13,7 +13,9 @@ import com.atguigu.spzx.model.vo.system.ValidateCodeVo;
 import com.atguigu.spzx.utils.AuthContextUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
 @Tag(name = "用户接口")
 @RestController
 @RequestMapping(value = "/admin/system/index")
+@Validated
 public class IndexController {
 
   @Autowired
@@ -74,8 +77,8 @@ public class IndexController {
 
   //用户登录
   @Operation(summary = "登录的方法")
-  @PostMapping("login")
-  public Result<LoginVo> login(@RequestBody LoginDto loginDto) {
+  @PostMapping("/login")
+  public Result<LoginVo> login(@RequestBody @Valid LoginDto loginDto) {
     LoginVo loginVo = sysUserService.login(loginDto);
     return Result.build(loginVo, ResultCodeEnum.SUCCESS);
   }

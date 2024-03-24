@@ -15,10 +15,13 @@
 
 ### Tables
 - 用户管理
+
 ![img.png](md-img-03.png)
 - 商品管理
+
 ![img.png](md-img-04.png)
 - 订单管理
+
 ![img_1.png](md-img-05.png)
 
 ### Backend
@@ -61,6 +64,10 @@
 # 拉取镜像,推荐8的版本
 docker pull mysql:8.0.30
 
+# 简化版启动
+docker run -d --name spzx-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root mysql:8.0.30
+# 一个比较坑的地方：容器启动后用 localhost和 127.0.0.1连接不上去，必须使用 ifconfig或者 ipconfig获取到的局域网 ip才能连接
+
 # 创建容器
 docker run -d --name mysql-spzx -p 3306:3306 -v mysql_data:/var/lib/mysql -v mysql_conf:/etc/mysql --restart=always --privileged=true -e MYSQL_ROOT_PASSWORD=root mysql:8.0.30
 
@@ -71,6 +78,9 @@ docker run -d --name mysql-spzx -p 3306:3306 -v mysql_data:/var/lib/mysql -v mys
 ```shell
 #1 拉取镜像
 docker pull redis:7.0.10
+
+# 简化版启动
+docker run -d --name spzx-redis -p 6379:6379 redis:7.0.10
 
 #2 如果/var/lib/docker/volumes没有redis-config，创建数据卷 
 docker volume create redis-config
