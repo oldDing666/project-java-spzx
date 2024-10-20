@@ -69,6 +69,7 @@ docker run -d --name spzx-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root mysql:8
 # 一个比较坑的地方：容器启动后用 localhost和 127.0.0.1连接不上去，必须使用 ifconfig或者 ipconfig获取到的局域网 ip才能连接
 
 # 创建容器
+# 重新创建一个新的容器后，要先删除原来的 volume 才行，不然无法连接上 MySQL
 docker run -d --name mysql-spzx -p 3306:3306 -v mysql_data:/var/lib/mysql -v mysql_conf:/etc/mysql --restart=always --privileged=true -e MYSQL_ROOT_PASSWORD=root mysql:8.0.30
 
 # 执行db_spzx.sql脚本
@@ -82,7 +83,8 @@ docker pull redis:7.0.10
 # 简化版启动
 docker run -d --name spzx-redis -p 6379:6379 redis:7.0.10
 
-#2 如果/var/lib/docker/volumes没有redis-config，创建数据卷 
+#2 如果/var/lib/docker/volumes没有redis-config，创建数据卷
+# 2024 年 10 月 20 日 14:21:01 更新: 不需要单独创建 volume，直接用后面的命令可以自动创建 
 docker volume create redis-config
 
 #3 在宿主机的 /var/lib/docker/volumes/redis-config/_data/目录下创建一个redis的配置文件，
@@ -100,7 +102,8 @@ docker run -d -p 6379:6379 --restart=always \
 -v redis-config:/etc/redis/config \
 -v redis-data:/data \
 --name redis-spzx redis:7.0.10 \
-redis-server /etc/redis/config/redis.conf
+# 不需要最后这一行，会导致docker容器无限循环重启
+# redis-server /etc/redis/config/redis.conf
 ```
 
 
