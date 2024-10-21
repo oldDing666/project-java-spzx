@@ -102,6 +102,8 @@ docker run -d -p 6379:6379 --restart=always \
 -v redis-config:/etc/redis/config \
 -v redis-data:/data \
 --name redis-spzx redis:7.0.10 \
+--requirepass root
+# ⬆️必须加上密码，不然公网 IP 的 redis 容易被攻击，最好有一定的复杂度
 # 不需要最后这一行，会导致docker容器无限循环重启
 # redis-server /etc/redis/config/redis.conf
 ```
